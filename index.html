@@ -114,7 +114,6 @@
 </head>
 <body class="flex flex-col min-h-screen text-slate-800 p-3 sm:p-6 overflow-x-hidden">
 
-    <!-- Top Modern Header -->
     <header class="max-w-5xl mx-auto w-full flex flex-wrap sm:flex-nowrap justify-between items-center glass-card p-4 rounded-3xl border border-white/60 mb-6 gap-3 shadow-glass">
         <div class="flex items-center gap-3">
             <div class="bg-gradient-to-tr from-amber-400 to-amber-300 text-slate-900 w-12 h-12 rounded-2xl shadow-lg flex items-center justify-center font-black text-2xl animate-float">
@@ -144,7 +143,6 @@
         </div>
     </header>
 
-    <!-- Main Interactive Area -->
     <main class="max-w-5xl mx-auto w-full flex-grow flex flex-col justify-center">
 
         <!-- SCREEN 1: Game Mode Selection -->
@@ -201,7 +199,7 @@
             <!-- Task Header & Progress -->
             <div class="glass-card p-4 rounded-3xl flex flex-wrap justify-between items-center gap-3">
                 <div class="flex items-center gap-3">
-                    <span id="stage-badge" class="bg-indigo-600 text-white px-3 py-1.5 rounded-xl font-black text-xs tracking-wide shadow-md">任務 1 / 6</span>
+                    <span id="stage-badge" class="bg-indigo-600 text-white px-3 py-1.5 rounded-xl font-black text-xs tracking-wide shadow-md">任務 1 / 5</span>
                     <h2 id="task-title" class="font-black text-slate-800 text-base sm:text-lg">任務載入中...</h2>
                 </div>
                 <div id="timer-display" class="font-mono text-slate-500 text-sm font-black bg-slate-100 px-3 py-1.5 rounded-xl flex items-center gap-2 border border-slate-200">
@@ -236,7 +234,7 @@
                                 提交 <i class="fa-solid fa-paper-plane ml-1"></i>
                             </button>
                         </div>
-                        <p class="text-[11px] text-slate-400 mt-2 font-medium"><i class="fa-solid fa-lightbulb text-amber-400 mr-1"></i>小撇步：點擊右側操作區塊可協助思考！</p>
+                        <p class="text-[11px] text-slate-400 mt-2 font-medium"><i class="fa-solid fa-lightbulb text-amber-400 mr-1"></i>小撇步：點擊右側操作區塊並可直接在下方「手寫筆記區」畫線計算！</p>
                     </div>
                 </div>
 
@@ -244,32 +242,31 @@
                 <div class="lg:col-span-7 glass-card p-6 rounded-3xl flex flex-col">
                     <div class="flex justify-between items-center mb-3">
                         <span class="font-extrabold text-slate-800 text-sm flex items-center gap-2">
-                            <i class="fa-solid fa-shapes text-sky-500"></i> 直覺圖像與具體操作區
+                            <i class="fa-solid fa-shapes text-sky-500"></i> 直覺圖像與畫筆草稿區
                         </span>
                         <div class="flex items-center gap-2">
-                            <button onclick="toggleCanvasGuide()" class="text-xs bg-indigo-50 text-indigo-700 hover:bg-indigo-100 px-2.5 py-1 rounded-lg font-bold transition border border-indigo-200">
-                                <i class="fa-solid fa-pen-ruler"></i> 塗鴉思考板
+                            <!-- Draw mode toggle controls -->
+                            <button id="pen-toggle-btn" onclick="togglePenMode()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl shadow transition flex items-center gap-1.5">
+                                <i class="fa-solid fa-pen"></i> <span id="pen-btn-text">啟動畫筆草稿</span>
                             </button>
-                        </div>
-                    </div>
-
-                    <!-- Dynamic Interactive Playground Area -->
-                    <div id="interactive-playground" class="flex-grow bg-slate-50/90 rounded-2xl border-2 border-dashed border-sky-200 p-4 min-h-[320px] flex flex-col items-center justify-center relative overflow-hidden">
-                        <!-- Content dynamically rendered depending on task type -->
-                    </div>
-
-                    <!-- Visual Canvas Overlay (Scratchpad for students) -->
-                    <div id="scratchpad-container" class="hidden mt-3 relative bg-white rounded-2xl border border-slate-300 p-2">
-                        <div class="flex justify-between items-center mb-2 px-1">
-                            <span class="text-xs font-bold text-slate-500"><i class="fa-solid fa-paintbrush"></i> 思考草稿板（劃分、畫圈輔助）</span>
-                            <div class="flex items-center gap-2">
-                                <button onclick="setCanvasColor('#ef4444')" class="w-5 h-5 rounded-full bg-red-500 border border-slate-300"></button>
-                                <button onclick="setCanvasColor('#3b82f6')" class="w-5 h-5 rounded-full bg-blue-500 border border-slate-300"></button>
-                                <button onclick="setCanvasColor('#10b981')" class="w-5 h-5 rounded-full bg-emerald-500 border border-slate-300"></button>
-                                <button onclick="clearCanvas()" class="text-xs text-rose-500 font-bold ml-2"><i class="fa-solid fa-trash-can"></i> 清除</button>
+                            <div id="pen-color-tools" class="hidden flex items-center gap-1.5 bg-slate-100 p-1 rounded-xl">
+                                <button onclick="setCanvasColor('#ef4444')" class="w-5 h-5 rounded-full bg-red-500 border border-white shadow hover:scale-110 transition" title="紅筆"></button>
+                                <button onclick="setCanvasColor('#3b82f6')" class="w-5 h-5 rounded-full bg-blue-500 border border-white shadow hover:scale-110 transition" title="藍筆"></button>
+                                <button onclick="setCanvasColor('#10b981')" class="w-5 h-5 rounded-full bg-emerald-500 border border-white shadow hover:scale-110 transition" title="綠筆"></button>
+                                <button onclick="clearCanvas()" class="text-xs bg-rose-100 text-rose-700 px-2 py-0.5 rounded-lg font-bold transition hover:bg-rose-200" title="清除筆劃"><i class="fa-solid fa-eraser"></i> 清除</button>
                             </div>
                         </div>
-                        <canvas id="scratchpad" class="w-full h-32 bg-slate-50 rounded-xl border border-slate-200 cursor-crosshair touch-none"></canvas>
+                    </div>
+
+                    <!-- Interactive Playground Overlay Canvas Container -->
+                    <div id="playground-wrapper" class="relative flex-grow bg-slate-50/90 rounded-2xl border-2 border-dashed border-sky-200 p-4 min-h-[340px] flex flex-col items-center justify-center overflow-hidden">
+                        <!-- Dynamic DOM Content underneath -->
+                        <div id="interactive-playground" class="w-full h-full flex flex-col items-center justify-center relative z-0">
+                            <!-- Content dynamically rendered depending on task type -->
+                        </div>
+
+                        <!-- Canvas layer rendered directly over the playground -->
+                        <canvas id="scratchpad-overlay" class="absolute inset-0 z-10 pointer-events-none cursor-crosshair touch-none w-full h-full rounded-2xl"></canvas>
                     </div>
                 </div>
 
@@ -375,8 +372,9 @@
         let secondsPassed = 0;
         let activeTasks = [];
         let interactiveState = {};
+        let isPenActive = false;
 
-        // Expanded Rich Task Pool (8 Unique Real-world Scenarios)
+        // Expanded Rich Task Pool (12 Unique Real-world Scenarios)
         const masterTaskPool = [
             {
                 id: 1,
@@ -403,21 +401,20 @@
                 renderPlayground: function(container) {
                     container.innerHTML = `
                         <div class="w-full text-center">
-                            <p class="text-xs sm:text-sm font-bold text-slate-700 mb-3">請點擊下方試飲杯，將珍奶倒滿來計算總杯數（有 16 個空格，請自行斟酌點擊）：</p>
-                            <div class="flex flex-col md:flex-row items-center justify-around gap-6">
-                                <div class="bg-white border-2 border-slate-200 rounded-3xl p-4 w-44 shadow-md flex flex-col items-center">
-                                    <span class="font-black text-amber-900 text-xs mb-2"><i class="fa-solid fa-jar"></i> 珍奶總容量 (2½L)</span>
-                                    <div class="w-full bg-slate-100 border-2 border-slate-300 rounded-2xl h-44 relative overflow-hidden flex flex-col-reverse p-1">
-                                        <div id="jug-liquid" class="bg-amber-400 border border-amber-500 rounded-xl w-full liquid-fill flex items-center justify-center font-black text-xs text-amber-950" style="height: 100%;">
+                            <p class="text-xs sm:text-sm font-bold text-slate-700 mb-2">請點擊下方試飲杯進行倒滿，或點擊右上角畫筆直接在圖上畫線劃分：</p>
+                            <div class="flex flex-col md:flex-row items-center justify-around gap-4">
+                                <div class="bg-white border-2 border-slate-200 rounded-2xl p-3 w-36 shadow-md flex flex-col items-center">
+                                    <span class="font-black text-amber-900 text-xs mb-1"><i class="fa-solid fa-jar"></i> 珍奶總容量 (2½L)</span>
+                                    <div class="w-full bg-slate-100 border-2 border-slate-300 rounded-xl h-32 relative overflow-hidden flex flex-col-reverse p-1">
+                                        <div id="jug-liquid" class="bg-amber-400 border border-amber-500 rounded-lg w-full liquid-fill flex items-center justify-center font-black text-xs text-amber-950" style="height: 100%;">
                                             2½ L
                                         </div>
                                     </div>
                                 </div>
-                                <div class="text-sky-400 text-2xl font-black"><i class="fa-solid fa-right-long hidden md:inline"></i><i class="fa-solid fa-down-long md:hidden"></i></div>
                                 <div class="flex flex-col items-center">
-                                    <span class="font-extrabold text-slate-700 text-xs mb-2">試飲杯櫃（每杯 ¼ 公升）</span>
-                                    <div id="cups-grid" class="grid grid-cols-4 gap-2 bg-white p-3 rounded-2xl border border-slate-200 shadow-sm max-h-48 overflow-y-auto"></div>
-                                    <div class="mt-3 text-xs sm:text-sm font-black text-indigo-600 bg-indigo-50 px-3 py-1 rounded-xl">你點擊倒滿的杯數：<span id="filled-cups-count" class="text-lg text-indigo-700">0</span> 杯</div>
+                                    <span class="font-extrabold text-slate-700 text-xs mb-1">試飲杯櫃（每杯 ¼ 公升）</span>
+                                    <div id="cups-grid" class="grid grid-cols-4 gap-1.5 bg-white p-2 rounded-xl border border-slate-200 shadow-sm max-h-36 overflow-y-auto"></div>
+                                    <div class="mt-2 text-xs font-black text-indigo-600 bg-indigo-50 px-3 py-1 rounded-lg">你點擊倒滿的杯數：<span id="filled-cups-count" class="text-base text-indigo-700">0</span> 杯</div>
                                 </div>
                             </div>
                         </div>
@@ -427,17 +424,18 @@
                     cupsGrid.innerHTML = '';
                     for (let i = 1; i <= 16; i++) {
                         const cup = document.createElement('div');
-                        cup.className = 'w-10 h-12 rounded-xl border-2 border-slate-200 bg-slate-50 flex flex-col items-center justify-center cursor-pointer transition hover:scale-105 shadow-sm';
-                        cup.innerHTML = `<i class="fa-solid fa-glass-water text-slate-300 text-xs"></i><span class="text-[9px] font-black text-slate-400">#${i}</span>`;
+                        cup.className = 'w-9 h-10 rounded-lg border-2 border-slate-200 bg-slate-50 flex flex-col items-center justify-center cursor-pointer transition hover:scale-105 shadow-sm';
+                        cup.innerHTML = `<i class="fa-solid fa-glass-water text-slate-300 text-[10px]"></i><span class="text-[8px] font-black text-slate-400">#${i}</span>`;
                         cup.onclick = function() {
+                            if (isPenActive) return;
                             playSound('click');
                             if (!cup.classList.contains('filled')) {
                                 cup.classList.add('filled', 'bg-amber-300', 'border-amber-500');
-                                cup.querySelector('i').className = 'fa-solid fa-glass-water text-amber-800 text-xs';
+                                cup.querySelector('i').className = 'fa-solid fa-glass-water text-amber-800 text-[10px]';
                                 interactiveState.filledCups++;
                             } else {
                                 cup.classList.remove('filled', 'bg-amber-300', 'border-amber-500');
-                                cup.querySelector('i').className = 'fa-solid fa-glass-water text-slate-300 text-xs';
+                                cup.querySelector('i').className = 'fa-solid fa-glass-water text-slate-300 text-[10px]';
                                 interactiveState.filledCups--;
                             }
                             const pct = Math.max(0, 100 - (interactiveState.filledCups * 6.25));
@@ -461,24 +459,24 @@
                 correctAnswer: 6,
                 explanationHTML: `
                     <strong class="text-sky-800 text-base">💡 觀念解析：</strong><br>
-                    • 1 分鐘前 1 分鐘能放 <strong>4</strong> 次。<br>
+                    • 前 1 分鐘能放 <strong>4</strong> 次。<br>
                     • 剩下的 <span class="fraction"><span class="top">1</span><span class="bottom">2</span></span> 分鐘還能放 <strong>2</strong> 次。<br>
                     • 總共能放 4 + 2 = <strong>6 次</strong>！
                 `,
                 renderPlayground: function(container) {
                     container.innerHTML = `
                         <div class="w-full text-center">
-                            <p class="text-xs sm:text-sm font-bold text-slate-700 mb-2">請在時間軸上點擊發動技能的時刻（總共提供 10 個發動點位供測試）：</p>
-                            <div class="bg-slate-900 p-4 sm:p-5 rounded-3xl text-white shadow-xl my-4 border-2 border-purple-500">
-                                <div class="flex justify-between text-xs font-black text-purple-300 mb-2 px-1">
+                            <p class="text-xs sm:text-sm font-bold text-slate-700 mb-2">請在時間軸上點擊發動技能，或開啟右上角畫筆劃分時間軸：</p>
+                            <div class="bg-slate-900 p-3 rounded-2xl text-white shadow-xl my-2 border-2 border-purple-500">
+                                <div class="flex justify-between text-[10px] font-black text-purple-300 mb-1 px-1">
                                     <span>0</span>
                                     <span>1分鐘</span>
                                     <span>1.5分鐘</span>
                                 </div>
-                                <div id="timeline-blocks" class="grid grid-cols-5 gap-2"></div>
+                                <div id="timeline-blocks" class="grid grid-cols-5 gap-1.5"></div>
                             </div>
-                            <div class="text-xs sm:text-sm font-black text-purple-700 bg-purple-50 px-3 py-1.5 rounded-xl inline-block border border-purple-200">
-                                已點擊技能次數：<span id="skill-cast-count" class="text-base text-purple-900">0</span> 次 ⚡
+                            <div class="text-xs font-black text-purple-700 bg-purple-50 px-3 py-1 rounded-lg inline-block border border-purple-200">
+                                已點擊技能次數：<span id="skill-cast-count" class="text-sm text-purple-900">0</span> 次 ⚡
                             </div>
                         </div>
                     `;
@@ -487,21 +485,22 @@
                     timeline.innerHTML = '';
                     for (let i = 1; i <= 10; i++) {
                         const block = document.createElement('button');
-                        block.className = 'bg-slate-800 border-2 border-purple-700/60 rounded-2xl py-3 flex flex-col items-center justify-center transition hover:bg-purple-800 shadow-md';
-                        block.innerHTML = `<i class="fa-solid fa-bolt text-slate-500 text-base mb-1"></i><span class="text-[10px] font-black text-slate-400"># ${i}</span>`;
+                        block.className = 'bg-slate-800 border-2 border-purple-700/60 rounded-xl py-2 flex flex-col items-center justify-center transition hover:bg-purple-800 shadow-sm';
+                        block.innerHTML = `<i class="fa-solid fa-bolt text-slate-500 text-sm mb-0.5"></i><span class="text-[9px] font-black text-slate-400"># ${i}</span>`;
                         block.onclick = function() {
+                            if (isPenActive) return;
                             playSound('click');
                             if (!block.classList.contains('active-cast')) {
                                 block.classList.add('active-cast', 'bg-amber-400', 'border-amber-200');
                                 block.classList.remove('bg-slate-800');
-                                block.querySelector('i').className = 'fa-solid fa-bolt text-amber-950 text-base mb-1';
-                                block.querySelector('span').className = 'text-[10px] font-black text-amber-950';
+                                block.querySelector('i').className = 'fa-solid fa-bolt text-amber-950 text-sm mb-0.5';
+                                block.querySelector('span').className = 'text-[9px] font-black text-amber-950';
                                 interactiveState.skillCasts++;
                             } else {
                                 block.classList.remove('active-cast', 'bg-amber-400', 'border-amber-200');
                                 block.classList.add('bg-slate-800');
-                                block.querySelector('i').className = 'fa-solid fa-bolt text-slate-500 text-base mb-1';
-                                block.querySelector('span').className = 'text-[10px] font-black text-slate-400';
+                                block.querySelector('i').className = 'fa-solid fa-bolt text-slate-500 text-sm mb-0.5';
+                                block.querySelector('span').className = 'text-[9px] font-black text-slate-400';
                                 interactiveState.skillCasts--;
                             }
                             document.getElementById('skill-cast-count').innerText = interactiveState.skillCasts;
@@ -529,16 +528,18 @@
                 `,
                 renderPlayground: function(container) {
                     container.innerHTML = `
-                        <div class="w-full text-center">
-                            <p class="text-xs sm:text-sm font-bold text-slate-700 mb-3">絲帶分配模擬（總長 4½ 公尺，每段 ¾ 公尺）：</p>
-                            <div class="bg-emerald-50 border-2 border-emerald-300 p-4 rounded-2xl shadow-inner mb-3">
-                                <div class="h-6 bg-gradient-to-r from-emerald-400 to-teal-500 rounded-lg w-full flex items-center justify-between px-2 text-white font-black text-xs shadow">
+                        <div class="w-full text-center space-y-3">
+                            <p class="text-xs sm:text-sm font-bold text-slate-700">絲帶全長 4½ 公尺（每段需要 ¾ 公尺）。開啟右上角畫筆，直接在絲帶圖上劃分段落打草稿：</p>
+                            <div class="bg-emerald-50 border-2 border-emerald-300 p-4 rounded-2xl shadow-inner relative">
+                                <div class="h-10 bg-gradient-to-r from-emerald-400 via-teal-400 to-emerald-600 rounded-xl w-full flex items-center justify-between px-3 text-white font-black text-xs shadow-md">
                                     <span>0m</span>
-                                    <span>絲帶全長 4½ 公尺</span>
+                                    <span>緞帶全長 4.5 公尺</span>
                                     <span>4.5m</span>
                                 </div>
+                                <div class="flex justify-between text-[10px] font-bold text-emerald-800 mt-2">
+                                    <span>0m</span><span>1m</span><span>2m</span><span>3m</span><span>4m</span><span>4.5m</span>
+                                </div>
                             </div>
-                            <p class="text-xs text-slate-500 font-medium">提示：利用上方塗鴉板畫線段來計算看看！</p>
                         </div>
                     `;
                 }
@@ -561,15 +562,15 @@
                 `,
                 renderPlayground: function(container) {
                     container.innerHTML = `
-                        <div class="w-full text-center">
-                            <p class="text-xs sm:text-sm font-bold text-slate-700 mb-3">環島里程數分段模擬：</p>
-                            <div class="bg-sky-50 border-2 border-sky-300 p-4 rounded-2xl shadow-inner mb-3">
+                        <div class="w-full text-center space-y-3">
+                            <p class="text-xs sm:text-sm font-bold text-slate-700">環島里程 6¾ 公里（每 1½ 公里設 1 站）。你可以直接用畫筆在路線上做記號：</p>
+                            <div class="bg-sky-50 border-2 border-sky-300 p-4 rounded-2xl shadow-inner">
                                 <div class="flex justify-between text-xs font-bold text-sky-900 mb-1">
                                     <span>0 公里</span>
                                     <span>6¾ 公里</span>
                                 </div>
-                                <div class="w-full bg-sky-200 h-4 rounded-full overflow-hidden flex">
-                                    <div class="bg-sky-500 h-full w-full animate-pulse"></div>
+                                <div class="w-full bg-sky-200 h-6 rounded-xl overflow-hidden flex relative">
+                                    <div class="bg-sky-500 h-full w-full"></div>
                                 </div>
                             </div>
                         </div>
@@ -594,20 +595,20 @@
                 `,
                 renderPlayground: function(container) {
                     container.innerHTML = `
-                        <div class="w-full text-center space-y-4">
-                            <p class="text-xs sm:text-sm font-bold text-slate-700">請把 1½ 公斤平分到 3 個袋子裡：</p>
-                            <div class="grid grid-cols-3 gap-3">
-                                <div class="bg-white border-2 border-rose-200 p-3 rounded-2xl flex flex-col items-center shadow-sm">
+                        <div class="w-full text-center space-y-2">
+                            <p class="text-xs sm:text-sm font-bold text-slate-700">請用畫筆將 1½ 公斤平分連線至 3 個洋芋片袋子中：</p>
+                            <div class="grid grid-cols-3 gap-2">
+                                <div class="bg-white border-2 border-rose-200 p-3 rounded-xl flex flex-col items-center shadow-sm">
                                     <i class="fa-solid fa-box-open text-rose-400 text-2xl mb-1"></i>
-                                    <span class="text-[10px] font-bold text-slate-500">洋芋片 A</span>
+                                    <span class="text-[10px] font-bold text-slate-600">洋芋片 A</span>
                                 </div>
-                                <div class="bg-white border-2 border-rose-200 p-3 rounded-2xl flex flex-col items-center shadow-sm">
+                                <div class="bg-white border-2 border-rose-200 p-3 rounded-xl flex flex-col items-center shadow-sm">
                                     <i class="fa-solid fa-box-open text-rose-400 text-2xl mb-1"></i>
-                                    <span class="text-[10px] font-bold text-slate-500">洋芋片 B</span>
+                                    <span class="text-[10px] font-bold text-slate-600">洋芋片 B</span>
                                 </div>
-                                <div class="bg-white border-2 border-rose-200 p-3 rounded-2xl flex flex-col items-center shadow-sm">
+                                <div class="bg-white border-2 border-rose-200 p-3 rounded-xl flex flex-col items-center shadow-sm">
                                     <i class="fa-solid fa-box-open text-rose-400 text-2xl mb-1"></i>
-                                    <span class="text-[10px] font-bold text-slate-500">洋芋片 C</span>
+                                    <span class="text-[10px] font-bold text-slate-600">洋芋片 C</span>
                                 </div>
                             </div>
                         </div>
@@ -632,10 +633,10 @@
                 `,
                 renderPlayground: function(container) {
                     container.innerHTML = `
-                        <div class="w-full text-center">
-                            <p class="text-xs sm:text-sm font-bold text-slate-700 mb-3">菜籃分裝模擬（總重 5¼ 公斤，每籃 ¾ 公斤）：</p>
-                            <div class="bg-emerald-50 border-2 border-emerald-300 p-4 rounded-2xl shadow-inner mb-3">
-                                <div class="h-6 bg-gradient-to-r from-emerald-400 to-green-600 rounded-lg w-full flex items-center justify-center text-white font-black text-xs shadow">
+                        <div class="w-full text-center space-y-2">
+                            <p class="text-xs sm:text-sm font-bold text-slate-700">小黃瓜總重 5¼ 公斤（每籃 ¾ 公斤）。請開啟畫筆直接劃分算算看：</p>
+                            <div class="bg-emerald-50 border-2 border-emerald-300 p-4 rounded-2xl shadow-inner">
+                                <div class="h-8 bg-gradient-to-r from-emerald-400 to-green-600 rounded-lg w-full flex items-center justify-center text-white font-black text-xs shadow">
                                     小黃瓜總重 5¼ 公斤
                                 </div>
                             </div>
@@ -661,10 +662,10 @@
                 `,
                 renderPlayground: function(container) {
                     container.innerHTML = `
-                        <div class="w-full text-center">
-                            <p class="text-xs sm:text-sm font-bold text-slate-700 mb-3">布料裁剪模擬（總長 8⅖ 公尺）：</p>
+                        <div class="w-full text-center space-y-2">
+                            <p class="text-xs sm:text-sm font-bold text-slate-700">布料總長 8⅖ 公尺（每件 1⅖ 公尺）。利用右上角筆劃工具打草稿：</p>
                             <div class="bg-indigo-50 border-2 border-indigo-300 p-4 rounded-2xl shadow-inner">
-                                <span class="text-xs font-bold text-indigo-800">每 1⅕ 公尺剪一段，算算看能剪幾段！</span>
+                                <span class="text-xs font-bold text-indigo-800">直接在畫面上標記出段落！</span>
                             </div>
                         </div>
                     `;
@@ -688,10 +689,114 @@
                 `,
                 renderPlayground: function(container) {
                     container.innerHTML = `
-                        <div class="w-full text-center">
-                            <p class="text-xs sm:text-sm font-bold text-slate-700 mb-3">乳酪抹醬分配模擬（總重 3⅓ 公斤）：</p>
+                        <div class="w-full text-center space-y-2">
+                            <p class="text-xs sm:text-sm font-bold text-slate-700">乳酪抹醬總重 3⅓ 公斤，每份 ⅔ 公斤：</p>
                             <div class="bg-amber-50 border-2 border-amber-300 p-4 rounded-2xl shadow-inner">
-                                <span class="text-xs font-bold text-amber-900">每 ⅔ 公斤一份，總共能分幾份呢？</span>
+                                <span class="text-xs font-bold text-amber-900">啟動畫筆，直接在畫布上記錄你的計算過程！</span>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            {
+                id: 9,
+                title: "任務：寵物店「黃金鼠飼料」分裝挑戰",
+                category: "重量單位分裝",
+                icon: "fa-solid fa-paw",
+                scenarioHTML: `
+                    寵物店進了一大包 <span class="font-black text-orange-700 bg-orange-100 px-2 py-0.5 rounded-lg">4 <span class="fraction"><span class="top">1</span><span class="bottom">2</span></span> 公斤</span> 的黃金鼠特級飼料。<br>
+                    如果每個小分裝袋剛好裝 <span class="font-black text-orange-700 bg-orange-100 px-2 py-0.5 rounded-lg"><span class="fraction"><span class="top">1</span><span class="bottom">2</span></span> 公斤</span>：<br><br>
+                    👉 <strong>總共可以裝成幾小袋？</strong>
+                `,
+                correctAnswer: 9,
+                explanationHTML: `
+                    <strong class="text-sky-800 text-base">💡 觀念解析：</strong><br>
+                    • 算式：4<span class="fraction"><span class="top">1</span><span class="bottom">2</span></span> ÷ <span class="fraction"><span class="top">1</span><span class="bottom">2</span></span> = <span class="fraction"><span class="top">9</span><span class="bottom">2</span></span> × 2 = <strong>9 袋</strong>！
+                `,
+                renderPlayground: function(container) {
+                    container.innerHTML = `
+                        <div class="w-full text-center space-y-2">
+                            <p class="text-xs sm:text-sm font-bold text-slate-700">飼料總重 4½ 公斤，每包 ½ 公斤：</p>
+                            <div class="bg-orange-50 border-2 border-orange-300 p-4 rounded-2xl shadow-inner">
+                                <span class="text-xs font-bold text-orange-900">使用畫筆在上方畫出 9 等份來進行視覺驗證！</span>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            {
+                id: 10,
+                title: "任務：油漆工「牆面塗刷」面積計算",
+                category: "面積與容積包含除",
+                icon: "fa-solid fa-paint-roller",
+                scenarioHTML: `
+                    油漆工阿明帶了 <span class="font-black text-blue-700 bg-blue-100 px-2 py-0.5 rounded-lg">7 <span class="fraction"><span class="top">1</span><span class="bottom">2</span></span> 公升</span> 的白漆。<br>
+                    如果塗刷每面牆壁需要 <span class="font-black text-blue-700 bg-blue-100 px-2 py-0.5 rounded-lg">1 <span class="fraction"><span class="top">1</span><span class="bottom">4</span></span> 公升</span>：<br><br>
+                    👉 <strong>這些油漆總共可以塗完幾面牆？</strong>
+                `,
+                correctAnswer: 6,
+                explanationHTML: `
+                    <strong class="text-sky-800 text-base">💡 觀念解析：</strong><br>
+                    • 算式：7<span class="fraction"><span class="top">1</span><span class="bottom">2</span></span> ÷ 1<span class="fraction"><span class="top">1</span><span class="bottom">4</span></span> = <span class="fraction"><span class="top">15</span><span class="bottom">2</span></span> × <span class="fraction"><span class="top">4</span><span class="bottom">5</span></span> = <strong>6 面</strong>！
+                `,
+                renderPlayground: function(container) {
+                    container.innerHTML = `
+                        <div class="w-full text-center space-y-2">
+                            <p class="text-xs sm:text-sm font-bold text-slate-700">油漆總量 7½ 公升，每面牆 1¼ 公升：</p>
+                            <div class="bg-blue-50 border-2 border-blue-300 p-4 rounded-2xl shadow-inner">
+                                <span class="text-xs font-bold text-blue-900">啟動筆劃功能，直接塗鴉算出解答！</span>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            {
+                id: 11,
+                title: "任務：果園「新鮮柳橙汁」玻璃瓶分裝",
+                category: "液體容量分配",
+                icon: "fa-solid fa-glass-citrus",
+                scenarioHTML: `
+                    果園今天榨了 <span class="font-black text-yellow-700 bg-yellow-100 px-2 py-0.5 rounded-lg">6 <span class="fraction"><span class="top">2</span><span class="bottom">3</span></span> 公升</span> 的純柳橙汁。<br>
+                    如果每瓶容量為 <span class="font-black text-yellow-700 bg-yellow-100 px-2 py-0.5 rounded-lg"><span class="fraction"><span class="top">1</span><span class="bottom">3</span></span> 公升</span>：<br><br>
+                    👉 <strong>總共可以裝滿幾瓶柳橙汁？</strong>
+                `,
+                correctAnswer: 20,
+                explanationHTML: `
+                    <strong class="text-sky-800 text-base">💡 觀念解析：</strong><br>
+                    • 算式：6<span class="fraction"><span class="top">2</span><span class="bottom">3</span></span> ÷ <span class="fraction"><span class="top">1</span><span class="bottom">3</span></span> = <span class="fraction"><span class="top">20</span><span class="bottom">3</span></span> × 3 = <strong>20 瓶</strong>！
+                `,
+                renderPlayground: function(container) {
+                    container.innerHTML = `
+                        <div class="w-full text-center space-y-2">
+                            <p class="text-xs sm:text-sm font-bold text-slate-700">柳橙汁總量 6⅔ 公升，每瓶 ⅓ 公升：</p>
+                            <div class="bg-yellow-50 border-2 border-yellow-300 p-4 rounded-2xl shadow-inner">
+                                <span class="text-xs font-bold text-yellow-900">用畫筆在下方寫下演算過程！</span>
+                            </div>
+                        </div>
+                    `;
+                }
+            },
+            {
+                id: 12,
+                title: "任務：木工坊「木條拼裝」裁切作業",
+                category: "長度切割計算",
+                icon: "fa-solid fa-hammer",
+                scenarioHTML: `
+                    木工師傅有一根長達 <span class="font-black text-amber-900 bg-amber-100 px-2 py-0.5 rounded-lg">5 <span class="fraction"><span class="top">1</span><span class="bottom">4</span></span> 公尺</span> 的實木條。<br>
+                    每件模型需要用掉 <span class="font-black text-amber-900 bg-amber-100 px-2 py-0.5 rounded-lg"><span class="fraction"><span class="top">7</span><span class="bottom">8</span></span> 公尺</span>：<br><br>
+                    👉 <strong>這根木條最多可以做幾件模型？</strong>
+                `,
+                correctAnswer: 6,
+                explanationHTML: `
+                    <strong class="text-sky-800 text-base">💡 觀念解析：</strong><br>
+                    • 算式：5<span class="fraction"><span class="top">1</span><span class="bottom">4</span></span> ÷ <span class="fraction"><span class="top">7</span><span class="bottom">8</span></span> = <span class="fraction"><span class="top">21</span><span class="bottom">4</span></span> × <span class="fraction"><span class="top">8</span><span class="bottom">7</span></span> = <strong>6 件</strong>！
+                `,
+                renderPlayground: function(container) {
+                    container.innerHTML = `
+                        <div class="w-full text-center space-y-2">
+                            <p class="text-xs sm:text-sm font-bold text-slate-700">木條總長 5¼ 公尺，每件 ⅞ 公尺：</p>
+                            <div class="bg-amber-50 border-2 border-amber-300 p-4 rounded-2xl shadow-inner">
+                                <span class="text-xs font-bold text-amber-900">點擊畫筆工具直接在畫面上圈出每段長度！</span>
                             </div>
                         </div>
                     `;
@@ -716,7 +821,6 @@
                 '<i class="fa-solid fa-users"></i> 小組合作競賽' : 
                 '<i class="fa-solid fa-user"></i> 個人闖關探索';
             
-            // Randomly select 5 unique tasks from the master pool for each playthrough
             activeTasks = shuffleArray(masterTaskPool).slice(0, 5);
             initGameplay();
         }
@@ -776,7 +880,8 @@
             updateScoreDisplay();
             startTimer();
             loadTask(currentStageIndex);
-            initScratchpad();
+            
+            setTimeout(initScratchpadOverlay, 100);
         }
 
         function startTimer() {
@@ -801,6 +906,9 @@
 
             const container = document.getElementById('interactive-playground');
             task.renderPlayground(container);
+
+            // Clear drawing board on task change
+            clearCanvas();
         }
 
         function checkAnswer() {
@@ -909,33 +1017,44 @@
             document.getElementById('screen-mode-select').classList.remove('hidden');
         }
 
-        // Robust Scratchpad Drawing logic for both mouse and touch
+        // Overlay Drawing Canvas logic (Directly covering the entire playground area)
         let canvas, ctx, drawing = false, canvasColor = '#ef4444';
 
-        function toggleCanvasGuide() {
+        function togglePenMode() {
             playSound('click');
-            const pad = document.getElementById('scratchpad-container');
-            pad.classList.toggle('hidden');
-            if (!pad.classList.contains('hidden')) {
-                // Re-initialize dimensions when toggled visible
-                setTimeout(initScratchpad, 50);
+            isPenActive = !isPenActive;
+            const btnText = document.getElementById('pen-btn-text');
+            const tools = document.getElementById('pen-color-tools');
+            const overlay = document.getElementById('scratchpad-overlay');
+
+            if (isPenActive) {
+                btnText.innerText = "關閉畫筆 (切換互動)";
+                tools.classList.remove('hidden');
+                overlay.classList.remove('pointer-events-none');
+                overlay.classList.add('pointer-events-auto');
+            } else {
+                btnText.innerText = "啟動畫筆草稿";
+                tools.classList.add('hidden');
+                overlay.classList.add('pointer-events-none');
+                overlay.classList.remove('pointer-events-auto');
             }
         }
 
-        function initScratchpad() {
-            canvas = document.getElementById('scratchpad');
+        function initScratchpadOverlay() {
+            canvas = document.getElementById('scratchpad-overlay');
             if (!canvas) return;
             ctx = canvas.getContext('2d');
             
-            // Set actual canvas size matching CSS layout width/height
-            const rect = canvas.getBoundingClientRect();
-            if (rect.width > 0) {
-                canvas.width = rect.width;
-                canvas.height = rect.height;
-            } else {
-                canvas.width = 400;
-                canvas.height = 128;
-            }
+            const resizeCanvas = () => {
+                const wrapper = document.getElementById('playground-wrapper');
+                if (wrapper) {
+                    canvas.width = wrapper.clientWidth;
+                    canvas.height = wrapper.clientHeight;
+                }
+            };
+
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
 
             ctx.lineWidth = 3;
             ctx.lineCap = 'round';
@@ -952,6 +1071,7 @@
             };
 
             const startDraw = (e) => {
+                if (!isPenActive) return;
                 e.preventDefault();
                 drawing = true;
                 const pos = getPos(e);
@@ -960,7 +1080,7 @@
             };
 
             const draw = (e) => {
-                if (!drawing) return;
+                if (!drawing || !isPenActive) return;
                 e.preventDefault();
                 const pos = getPos(e);
                 ctx.strokeStyle = canvasColor;
@@ -974,14 +1094,6 @@
                     drawing = false;
                 }
             };
-
-            // Remove existing listeners to avoid duplicate bindings
-            canvas.onmousedown = null;
-            canvas.onmousemove = null;
-            canvas.onmouseup = null;
-            canvas.ontouchstart = null;
-            canvas.ontouchmove = null;
-            canvas.ontouchend = null;
 
             canvas.addEventListener('mousedown', startDraw, { passive: false });
             canvas.addEventListener('mousemove', draw, { passive: false });
